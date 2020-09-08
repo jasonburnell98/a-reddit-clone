@@ -1,0 +1,308 @@
+<!--
+
+  1. UPVOTE DOWNVOTE BUTTONS (FIX CSS and REALTIME UPDATE, ***shouldn't be able to upvote more than once)
+  2. GITHUB AND FB AUTHENTICATION and ****PERMISSIONS(hide create post button until user logs in)
+  3. Let pressing enter search posts and create comments 
+  4. ADD IMAGES OR LINKS TO POSTS
+  5. Tabs on create a post to allow for MEDIA, SPORTS etc. specific Post
+  6. update media sports etc.
+  7. ENDPOINTS
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            <meta name="google-signin-ourreddit-1572579679058" content="ourreddit-1572579679058.apps.googleusercontent.com">
+            <title>Sports</title>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" 
+            integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+            <script>"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"</script>
+            <link rel = "stylesheet" href="StyleSheets/custom.css">
+            <link rel = "stylesheet" href="StyleSheets/toggle.css">
+            <link rel = "stylesheet" href="StyleSheets/background.css">
+            <script src="https://apis.google.com/js/platform.js" async defer></script>
+            
+
+        </head> 
+
+    <body>
+    
+
+<!--- GOOGLE STUFF////
+               <button id="close" class="closing" onClick="googleSignin()"><img src="glogo.png" width="25px" height="25px" />Log in with Google</button>
+                  <div class="btn white darken-4 col s10 m4">
+                   <a href="/users/google-oauth/" style="text-transform:none">
+                  <div class="left">
+                    <img width="50px" height="50px"  alt="Google &quot;G&quot; Logo" src="glogo.png"/>
+                </div>Login with Google</a>
+
+                  <button onclick = "googleSignin()">Google Signin</button>
+                    <div class="btn white darken-4 col s10 m4">
+                      <a href="/users/google-oauth/" style="text-transform:none">
+                          <div class="left">
+                              <img width="50px" height="50px"  alt="Google &quot;G&quot; Logo" src="glogo.png"/>
+                          </div>Login with Google</a>
+                  </div> -->
+            
+
+    <!--BOOTSTRAP NAVBAR-->
+    <nav id="topbar"class="navbar navbar-expand-lg navbar-inverse"  >
+      <a href="sports.html"><img src="reddi.png" title="Example Image Link" width="30" height="30" /></a>
+        <!--<IMG SRC= "reddi.png" ALT= "some text" WIDTH = 30 HEIGHT = 20>&nbsp; -->
+      <a href="index.html" id = "ourredd" class= "navbar-brand" font-style="VAG rounded">Sports</a>
+    
+        <!--COLLAPSIBLE BOOTSTRAP BUTTON-->
+        <button class="navbar-toggler" id = "togglebutton" data-toggle="collapse" data-target="#navbarMenu">
+            <span class = "navbar-toggler-icon"></span>
+       </button> 
+        <div class= "collapse navbar-collapse" id = "navbarMenu" >
+        <ul class="navbar-nav">
+       
+                <!--DROPDOWN MENU-->
+             <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" 
+                 aria-haspopup="true" aria-expanded="false">Popular</a>
+                <div class="dropdown-menu" id = "mydropdown"aria-labelledby="navbarDropdown">
+                
+                 <input type="text" placeholder="Filter" id="myInput" onkeyup="filterFunction()">
+                   <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="media.html">Media</a>
+                    <a class="dropdown-item" href="sports.html">Sports</a>
+                
+                <a class="dropdown-item" href="news.html">News</a>
+              </div>
+             </li>
+      &nbsp; &nbsp; &nbsp; 
+<button class="btn btn-primary pull-right" type = "button"onclick="document.getElementById('modal-create').style.display='block'">create
+</button>
+
+    <!--search button-->
+    <form id = "mainform" action="">
+      <input id = "mainsearch" type="search" placeholder="search for post">
+      <i id="searchBar" class="fa fa-search"></i>
+    </form>
+        </div>
+        
+
+  
+
+             <!--ACCOUNT DROP DOWN-->
+     <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" 
+                 aria-haspopup="true" aria-expanded="false">Account</a>
+                <div class="dropdown-menu" id = "mydropdown"aria-labelledby="navbarDropdown">
+                     <a class="dropdown-item">NightMode on/off
+                    <div class="toggle"></div></a>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-divider"></div>
+                   &nbsp; &nbsp; &nbsp;
+                 <a href="#" class="grey-text" id="logout">Logout</a>
+              </div>
+           </li>
+      </ul>
+
+    
+                 <!--LOGIN BUTTONS-->
+        <button class="btn btn-primary pull-right" type = "button"onclick="document.getElementById('modal-login').style.display='block'" >Login</button>
+           &nbsp;
+           
+        <button class="btn  btn pull-right btn-outline-secondary" type="button" onclick="document.getElementById('modal-signup').style.display='block'" >Signup</button>
+           &nbsp;
+
+      <!-- <formid = "logout"><button class="btn  btn pull-rloight btn-outline-secondary" type="button">Logout</button></form>--> 
+
+    </nav> 
+    
+   <!-- SIGNUP MODAL -->
+   <div id="modal-signup" class="modal">
+     <div id="login-box">
+       <div class="left">
+         <span onclick="document.getElementById('modal-signup').style.display='none'" class="close" title="Close Modal">&times;</span>
+          <h1>Sign up</h1>
+            <form id="signup-form">
+              <input type="text"id="signup-username" name="username" placeholder="Username" />
+              <input type="text" name="email" id="signup-email" placeholder="E-mail" />
+              <input type="password" id="signup-password"name="password" placeholder="Password" />
+            <button id="modalbuttons"text-align="center"   type="submit" class="btn btn-success btn-block btn-large">Signup</button>
+          </form>
+        </div>
+       <div class="right">
+          <span class="loginwith">Sign in with<br />social network</span>
+          <button class="social-signin facebook">Log in with facebook</button>
+          <button class="social-signin twitter" onclick ="githubSignin()">Log in with Github</button>
+          <button class="social-signin google" onclick = "googleSignin()">Log in with Google+</button>
+       </div>
+    <div class="or">OR</div>
+  </div>
+</div>
+ <!-- LOGIN MODAL -->
+   <div id="modal-login" class="modal">
+      <div id="login-box">
+       <form id="login-form">
+        <div class="left">
+          <span onclick="document.getElementById('modal-login').style.display='none'" class="close" title="Close Modal">&times;</span>
+            <h1>Please Log in</h1>
+            <input type="text" name="email" id="login-email" placeholder="E-mail" />
+            <input type="password" id="login-password"name="password" placeholder="Password" />
+           <button id="modalbuttons"text-align="center"   type="submit" class="btn btn-success btn-block btn-large">Login</button>
+        </form>
+      </div>
+         <div class="right">
+           <span class="loginwith">Sign in with<br />social network</span>
+              <button class="social-signin facebook">Log in with facebook</button>
+              <button class="social-signin twitter">Log in with Github</button>
+              <button class="social-signin google" onclick = "googleSignin()">Log in with Google+</button>
+           </div>
+        <div class="or">OR</div>
+      </div>
+    </div>
+
+  <!-- ACCOUNT MODAL -->
+  <div id="modal-account" class="modal">
+    <div class="modal-content center-align">
+      <h4>Account details</h4><br />
+      <div class="account-details"></div>
+      <div class="account-extras"></div>
+    </div>
+  </div>
+
+   <!-- TEST POST MODAL -->
+   <div id="modal-create" class="modal">
+      <div id="login-box"> 
+        <span onclick="document.getElementById('modal-create').style.display='none'" class="close" title="Close Modal">&times;</span>
+         <div style="text-align: center">
+                
+            <h1>Create a Post</h1></div>
+              <p>Choose a category:</p>
+
+                              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                  <label class="btn btn-secondary active">
+                    <input type="radio" name="options" id="option1" autocomplete="off" checked>Sports
+                  </label>
+                  <label class="btn btn-secondary">
+                    <input type="radio" name="options" id="option2" autocomplete="off">Media
+                  </label>
+                  <label class="btn btn-secondary">
+                    <input type="radio" name="options" id="option3" autocomplete="off">News
+                  </label>
+                </div>
+                <br>
+               <div class="form-group">
+                <textarea class="form-control" id = "name" rows="1"placeholder="Title"></textarea>
+                  <textarea class="form-control" id = "contents" rows="7"placeholder="Text"></textarea>
+                
+                  <div id="postbutton">
+                <button id="modalbuttons" type="submit" class=" btn btn-primary  "onclick="add()">POST</button>
+              <button id="modalbuttons" type="submit" class=" btn btn-default "onclick="document.getElementById('modal-create').style.display='none'" >SAVE DRAFT</button>
+            </div>
+          </div>
+      </div>
+    </div>
+
+
+  <!-- CREATE POST MODAL 
+  <div id="modal-create" class="modal" >
+      <div class="login">
+       <span onclick="document.getElementById('modal-create').style.display='none'" class="close" title="Close Modal">&times;</span>
+         <h1 text-align="center">Create a Post</h1>
+           <div class="input-field">
+              <input type= "text" id = "name" placeholder="enter name">
+              <input type= "text" id = "contents" placeholder="enter content">
+              <button id="modalbuttons" type="submit" class="btn btn-primary btn-block btn-large"onclick="add()">ADD POST</button>
+          </div>
+      </div>
+  </div>-->
+
+
+
+
+
+
+  
+        <br>;
+    
+         
+
+
+
+<script type="template/string" id="mytemplate">
+    <div id="theposts" align="center"text-align="center"></div>
+</script>
+
+
+<script type ="template/string" id ="comments">
+
+   <ul id="commentList" align="center"></ul>
+</script>
+
+
+  <!--Toggle Night Mode-->
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('.toggle').click(function(){
+            $('.toggle').toggleClass('active')
+            $('body').toggleClass('night')
+            $('navbar').toggleClass('night')
+        })
+    })
+</script>
+
+
+<script>
+// Get the modal
+var modal = document.getElementById('modal-login');
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+} 
+//DROPDOWN MENU FUNCTION
+function filterFunction() {
+  var input, filter, ul, li, a, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  div = document.getElementById("mydropdown");
+  a = div.getElementsByTagName("a");
+  for (i = 0; i < a.length; i++) {
+    txtValue = a[i].textContent || a[i].innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      a[i].style.display = "";
+    } else {
+      a[i].style.display = "none";
+    }
+  }
+}
+
+</script>
+    
+            <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-firestore.js"></script>
+         <script src="Scripts/connect.js"></script>
+         <script src="Scripts/custom.js"></script>
+
+
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+            https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-analytics.js"></script>
+
+               <!--compiled and minified Javascript-->
+                <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+                <script src="Scripts/auth.js"></script>
+                <script src="Scripts/index.js"></script>
+    </body>
+</html>
